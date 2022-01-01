@@ -70,12 +70,17 @@ EOT
   sed -i "s/%device%/$ALSA_PCM_NAME/g" "$CONF_FILE"
 fi
 
-# Stop kodi
-systemctl stop kodi
-
-# Start kodi when this script exits
-trap "systemctl start kodi" EXIT
-
+if [[ "${DISTRIBUTION}" = "libreelec" ]]; then
+  # Stop kodi
+  systemctl stop kodi
+  # Start kodi when this script exits
+  trap "systemctl start kodi" EXIT
+elif [[ "${DISTRIBUTION}" = "osmc" ]]; then
+  # Stop kodi
+  systemctl stop mediacenter
+  # Start kodi when this script exits
+  trap "systemctl start mediacenter" EXIT
+fi
 # Start moonlight-qt and log to log file
 echo "--- Starting Moonlight ---"
 ./moonlight-qt "$@"

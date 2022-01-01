@@ -15,11 +15,17 @@ for file in /etc/os-release /usr/lib/os-release; do
   fi
 done
 
-# Parse project var and convert to lower case
-PLATFORM="$(echo "$LIBREELEC_PROJECT" | tr '[:upper:]' '[:lower:]')"
+if [[ -v LIBREELEC_PROJECT ]]; then
+  # Parse project var and convert to lower case
+  PLATFORM="$(echo "$LIBREELEC_PROJECT" | tr '[:upper:]' '[:lower:]')"
+  DISTRIBUTION="libreelec"
+elif [[ -v ID ]] && [[ "${ID}" = "osmc" ]]; then
+  PLATFORM=rpi
+  DISTRIBUTION=${ID}
+fi
 
 if [ -f "../etc/${PLATFORM}.sh" ]; then
-  echo "Platform $PLATFORM detected..."
+  echo "Platform $PLATFORM and Distribution $DISTRIBUTION detected..."
 else
   echo "ERROR: Unknown platform: $PLATFORM" 1>&2
   return 2
