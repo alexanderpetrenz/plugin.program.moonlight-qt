@@ -28,6 +28,10 @@ export XDG_RUNTIME_DIR=/var/run/
 source ./get-platform.sh
 source "../etc/$PLATFORM.sh"
 
+if [ -f "${HOME}/kodi-moonlight-qt/env.sh" ]; then
+  source "${HOME}/kodi-moonlight-qt/env.sh"
+fi
+
 # Make sure home path exists
 mkdir -p "$HOME"
 
