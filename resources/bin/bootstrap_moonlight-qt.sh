@@ -28,8 +28,11 @@ export XDG_RUNTIME_DIR=/var/run/
 source ./get-platform.sh
 source "../etc/$PLATFORM.sh"
 
-if [ -f "${HOME}/kodi-moonlight-qt/env.sh" ]; then
-  source "${HOME}/kodi-moonlight-qt/env.sh"
+if [ -f "${HOME}/user-env.sh" ]; then
+  echo "Moonlight: Loading installation specific configuration"
+  source "${HOME}/user-env.sh"
+else
+  echo "Moonlight: No installation specific configuration found"
 fi
 
 # Make sure home path exists
